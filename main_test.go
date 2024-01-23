@@ -20,7 +20,7 @@ func TestGetStringArray(t *testing.T) {
 	}
 
 	// Check the response body
-	expectedBody := `[]`
+	expectedBody := `["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"]`
 	if body := rr.Body.String(); body != expectedBody {
 		t.Errorf("handler returned unexpected body: got %v want %v", body, expectedBody)
 	}
