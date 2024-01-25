@@ -39,3 +39,17 @@ func TestSignByDateHandlerReturnsBadRequestWhenDateParameterIsMissing(t *testing
 		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusBadRequest)
 	}
 }
+
+func TestSignByDateHandlerReturnsBadRequestWhenDateParameterIsInvalid(t *testing.T) {
+	req, err := http.NewRequest("GET", "/signByDate?date=invalid-date", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	signByDateHandler(rr, req)
+
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusBadRequest)
+	}
+}
