@@ -25,3 +25,17 @@ func TestGetStringArray(t *testing.T) {
 		t.Errorf("handler returned unexpected body: got %v want %v", body, expectedBody)
 	}
 }
+
+func TestSignByDateHandlerReturnsBadRequestWhenDateParameterIsMissing(t *testing.T) {
+	req, err := http.NewRequest("GET", "/signByDate", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	signByDateHandler(rr, req)
+
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusBadRequest)
+	}
+}
