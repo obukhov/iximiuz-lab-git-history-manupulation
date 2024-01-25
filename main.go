@@ -8,14 +8,17 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/signs", signsHandler)
-	http.HandleFunc("/signByDate", signByDateHandler)
-
+	initRoutes()
 	fmt.Println("Server listening on :8080")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("Error:", err)
 	}
+}
+
+func initRoutes() {
+	http.HandleFunc("/signs", signsHandler)
+	http.HandleFunc("/signByDate", signByDateHandler)
 }
 
 func signsHandler(w http.ResponseWriter, r *http.Request) {
