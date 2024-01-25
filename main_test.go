@@ -53,3 +53,22 @@ func TestSignByDateHandlerReturnsBadRequestWhenDateParameterIsInvalid(t *testing
 		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusBadRequest)
 	}
 }
+
+func TestSignByDateHandlerReturnsCorrectSignForGivenDate(t *testing.T) {
+	req, err := http.NewRequest("GET", "/signByDate?date=1986-01-05", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	signByDateHandler(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+	}
+
+	expectedBody := `"Capricorn"`
+	if body := rr.Body.String(); body != expectedBody {
+		t.Errorf("handler returned unexpected body: got %v want %v", body, expectedBody)
+	}
+}
